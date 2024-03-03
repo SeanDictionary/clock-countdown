@@ -66,7 +66,7 @@ class FloatingWindow(QWidget):
     def createSystemTrayIcon(self):
         self.trayIcon = QSystemTrayIcon(self)
         self.trayIcon.setIcon(QIcon("icon.png"))  # 替换为你自己的图标路径
-        self.trayIcon.setToolTip("悬浮时钟V1.2 by.SL")
+        self.trayIcon.setToolTip("悬浮时钟V1.3 by.SL")
         self.trayIcon.activated.connect(self.toggleWindow)
         self.trayIcon.show()
 
