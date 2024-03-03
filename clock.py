@@ -11,11 +11,10 @@ import sys
 import time
 from datetime import datetime
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QDialog, QVBoxLayout, QLineEdit, QPushButton, QShortcut, QCheckBox,QSystemTrayIcon, QMenu
-from PyQt5.QtGui import QFont, QColor, QPainter, QBrush, QPalette, QKeySequence, QIcon
-from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtCore import QCoreApplication
+from PyQt5.QtGui import QFont, QColor, QPainter, QBrush, QKeySequence, QIcon
+from PyQt5.QtCore import Qt, QTimer, QCoreApplication,QEvent
 import json
-
+from markdown2 import markdown_path
 
 class FloatingWindow(QWidget):
     def __init__(self):
@@ -67,7 +66,7 @@ class FloatingWindow(QWidget):
     def createSystemTrayIcon(self):
         self.trayIcon = QSystemTrayIcon(self)
         self.trayIcon.setIcon(QIcon("icon.png"))  # 替换为你自己的图标路径
-        self.trayIcon.setToolTip("悬浮时钟V1.0 by.SL")
+        self.trayIcon.setToolTip("悬浮时钟V1.2 by.SL")
         self.trayIcon.activated.connect(self.toggleWindow)
         self.trayIcon.show()
 
@@ -336,6 +335,35 @@ class SettingsWindow(QDialog):
         except FileNotFoundError:
             pass
 
+    def event(self, event):
+        if event.type()==QEvent.EnterWhatsThisMode:
+            self.showHelpWindow()
+        return QDialog.event(self,event)
+    
+    def showHelpWindow(self):
+       self.settings_window = HelpWindow(self.parent())
+       self.settings_window.exec_()
+
+
+class HelpWindow(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+        self.setWindowTitle('帮助')
+        self.setGeometry(100, 100, 600, 400)
+
+        layout = QVBoxLayout()
+
+        # 读取 readme.md 文件的内容并转换为 HTML
+        readme_html = markdown_path('readme.md')
+
+        # 创建 QLabel 显示 HTML 内容
+        label = QLabel()
+        label.setOpenExternalLinks(True)
+        label.setText(readme_html)
+        layout.addWidget(label)
+
+        self.setLayout(layout)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
