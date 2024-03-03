@@ -1,7 +1,7 @@
 '''
 制作人：SeanDictionary
 联系方式：sean.dictionary@qq.com
-版本V1.2，随缘更新。
+版本V1.3，随缘更新。
 '''
 
 
