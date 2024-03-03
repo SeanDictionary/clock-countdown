@@ -13,3 +13,5 @@ shift+esc退出软件
 方向键可以微调窗口位置。
 ### 一些提醒
 setting.json属于配置文件，会自动生成，需要放置在clock.exe同目录下。
+
+[访问github](https://github.com/SeanDictionary/clock-countdown)
